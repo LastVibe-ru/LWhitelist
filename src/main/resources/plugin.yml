@@ -1,0 +1,9 @@
+name: LWhitelist
+version: '1.0'
+main: com.karpen.lWhitelist.LWhitelist
+api-version: '1.21'
+
+commands:
+  vlist:
+    usage: /vlist <add | ban>
+    permissions: karpen.lwlist.vlist

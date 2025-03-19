@@ -1,0 +1,10 @@
+# LWhitelist - https://github.com/karpen-dev/
+
+# Database url
+db-url: "jdbc:mysql://localhost:3306/list"
+
+# Database user
+db-user: "root"
+
+# Database password
+db-password: "root"
