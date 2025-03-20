@@ -1,33 +1,51 @@
 package com.karpen.lWhitelist.commands;
 
-import com.karpen.lWhitelist.services.ListManager;
+import com.karpen.lWhitelist.managers.ListManager;
+import com.karpen.lWhitelist.managers.WebManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+
+import java.util.Arrays;
+import java.util.Objects;
 
 public class ListCommands implements CommandExecutor {
 
     private ListManager manager;
+    private WebManager web;
 
-    public ListCommands(ListManager manager){
+    public ListCommands(ListManager manager, WebManager web){
         this.manager = manager;
+        this.web = web;
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (args.length == 0 || args.length == 1 ){
-            sender.sendMessage(ChatColor.RED + "Используй /vlist <ban | add | unban>");
+            sender.sendMessage(ChatColor.RED + "Используй /vlist <ban 'ник' (причина) | add 'ник' | unban 'ник'>");
 
             return true;
         }
 
+        if (args[0].equalsIgnoreCase("ban") && args.length < 3){
+            sender.sendMessage(ChatColor.RED + "Используй /vlist <ban 'ник' (причина) | add 'ник' | unban 'ник'>");
+            return true;
+        }
+
+        if (args[0].equalsIgnoreCase("ban")) {
+            String name = args[1];
+            String reason = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
+            reason = reason.replaceAll("^\"(.*)\"$", "$1");
+
+            return banUser(name, reason, sender);
+        }
+
         return switch (args[0].toLowerCase()){
             case "add" -> addUser(args[1], sender);
-            case "ban" -> banUser(args[1], sender);
+            case "ban" -> banUser(args[1], args[2], sender);
             case "unban" -> unbanUser(args[1], sender);
             default -> def(sender);
         };
@@ -40,11 +58,16 @@ public class ListCommands implements CommandExecutor {
         return true;
     }
 
-    private boolean banUser(String name, CommandSender sender){
-        manager.banUserByName(name);
+    private boolean banUser(String name, String reason, CommandSender sender){
+        manager.banUserByName(name, reason);
 
         sender.sendMessage(ChatColor.GREEN + "Игрок " + name + " забанен");
-        Bukkit.getPlayer(name).kickPlayer(ChatColor.RED + "Вы забанены, причина lastvibe.ru/bans");
+
+        if (Objects.requireNonNull(Bukkit.getPlayer(name)).isOnline()){
+            Objects.requireNonNull(Bukkit.getPlayer(name)).kickPlayer(ChatColor.RED + "Вы забанены, " + manager.getUser(name).getReason());
+        }
+
+        web.banUser(name, reason);
 
         return true;
     }
@@ -58,7 +81,8 @@ public class ListCommands implements CommandExecutor {
     }
 
     private boolean def(CommandSender sender){
-        sender.sendMessage(ChatColor.RED + "Используй /vlist <ban | add | unban>");
+        sender.sendMessage(ChatColor.RED + "Используй /vlist <ban 'ник' (причина) | add 'ник' | unban 'ник'>");
+
         return true;
     }
 }

@@ -8,5 +8,6 @@ import lombok.Setter;
 public class User {
     private String name;
     private boolean access;
+    private String reason;
     private boolean baned;
 }

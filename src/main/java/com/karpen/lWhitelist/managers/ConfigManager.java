@@ -1,4 +1,4 @@
-package com.karpen.lWhitelist.services;
+package com.karpen.lWhitelist.managers;
 
 import com.karpen.lWhitelist.models.Config;
 import org.bukkit.configuration.Configuration;

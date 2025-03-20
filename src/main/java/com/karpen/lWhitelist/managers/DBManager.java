@@ -1,16 +1,13 @@
-package com.karpen.lWhitelist.services;
+package com.karpen.lWhitelist.managers;
 
 import com.karpen.lWhitelist.models.Config;
 import com.karpen.lWhitelist.models.User;
 import lombok.Setter;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class DBManager {
 
@@ -46,6 +43,7 @@ public class DBManager {
         String createTableSQL = "CREATE TABLE IF NOT EXISTS players ("+
                 "playerName VARCHAR(100) PRIMARY KEY, " +
                 "access BIT(1) NOT NULL, " +
+                "reason VARCHAR(100), " +
                 "banned BIT(1) NOT NULL)";
 
         try(Statement stmt = connection.createStatement()) {
@@ -72,12 +70,13 @@ public class DBManager {
     }
 
     public void addUser(User user){
-        String insertSQL = "INSERT INTO players (playerName, access, banned) VALUES (?, ?, ?)";
+        String insertSQL = "INSERT INTO players (playerName, access, banned, reason) VALUES (?, ?, ?, ?)";
 
         try(PreparedStatement stmt = connection.prepareStatement(insertSQL)) {
             stmt.setString(1, user.getName());
             stmt.setInt(2, convertBoolToBit(user.isAccess()));
             stmt.setInt(3, convertBoolToBit(user.isBaned()));
+            stmt.setString(4, user.getReason());
 
             stmt.addBatch();
             stmt.executeBatch();
@@ -87,13 +86,14 @@ public class DBManager {
     }
 
     public void saveUsers(List<User> users){
-        String insertSQL = "UPDATE players SET playerName = ?, access = ?, banned = ?";
+        String insertSQL = "UPDATE players SET playerName = ?, access = ?, banned = ?, reason = ?";
 
         try(PreparedStatement stmt = connection.prepareStatement(insertSQL)) {
             for (User user : users){
                 stmt.setString(1, user.getName());
                 stmt.setInt(2, convertBoolToBit(user.isAccess()));
                 stmt.setInt(3, convertBoolToBit(user.isBaned()));
+                stmt.setString(4, user.getReason());
 
                 stmt.addBatch();
             }
@@ -107,7 +107,7 @@ public class DBManager {
     public List<User> loadUsers(){
         List<User> users = new ArrayList<>();
 
-        String query = "SELECT playerName, access, banned FROM players";
+        String query = "SELECT playerName, access, banned, reason FROM players";
 
         try(Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -117,11 +117,13 @@ public class DBManager {
                 String playerName = resultSet.getString("playerName");
                 boolean access = convertIntToBool(resultSet.getInt("access"));
                 boolean banned = convertIntToBool(resultSet.getInt("banned"));
+                String reason = resultSet.getString("reason");
 
                 User user = new User();
                 user.setName(playerName);
                 user.setAccess(access);
                 user.setBaned(banned);
+                user.setReason(reason);
 
                 users.add(user);
             }

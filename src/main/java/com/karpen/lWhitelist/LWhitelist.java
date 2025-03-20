@@ -3,10 +3,11 @@ package com.karpen.lWhitelist;
 import com.karpen.lWhitelist.commands.ListCommands;
 import com.karpen.lWhitelist.commands.ListSuggests;
 import com.karpen.lWhitelist.listeners.MainListeners;
+import com.karpen.lWhitelist.managers.WebManager;
 import com.karpen.lWhitelist.models.Config;
-import com.karpen.lWhitelist.services.ConfigManager;
-import com.karpen.lWhitelist.services.DBManager;
-import com.karpen.lWhitelist.services.ListManager;
+import com.karpen.lWhitelist.managers.ConfigManager;
+import com.karpen.lWhitelist.managers.DBManager;
+import com.karpen.lWhitelist.managers.ListManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -19,6 +20,7 @@ public final class LWhitelist extends JavaPlugin {
     private ListCommands commands;
     private MainListeners listeners;
     private ListSuggests suggests;
+    private WebManager webManager;
 
     @Override
     public void onEnable() {
@@ -29,7 +31,8 @@ public final class LWhitelist extends JavaPlugin {
 
         dbManager = new DBManager(config, this);
         listManager = new ListManager(dbManager);
-        commands = new ListCommands(listManager);
+        webManager = new WebManager(this);
+        commands = new ListCommands(listManager, webManager);
         listeners = new MainListeners(listManager);
         suggests = new ListSuggests();
 

@@ -1,7 +1,7 @@
 package com.karpen.lWhitelist.listeners;
 
-import com.karpen.lWhitelist.services.ListManager;
-import org.bukkit.Bukkit;
+import com.karpen.lWhitelist.managers.ListManager;
+import com.karpen.lWhitelist.managers.WebManager;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,7 +27,7 @@ public class MainListeners implements Listener {
         }
 
         if (manager.getUser(player.getName()).isBaned()){
-            player.kickPlayer(ChatColor.RED + "Вы были забанены, причина lastvibe.ru/bans");
+            player.kickPlayer(ChatColor.RED + "Вы были забанены, " + manager.getUser(player.getName()).getReason());
 
             return;
         }
