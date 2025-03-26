@@ -18,7 +18,7 @@ public class WebManager {
         this.plugin = plugin;
     }
 
-    private String url = "http://127.0.0.1:8091/ban?name=";
+    private String url = "http://karpendev.ru:8091/ban?name=";
 
     public void banUser(String name, String reason) {
         try {

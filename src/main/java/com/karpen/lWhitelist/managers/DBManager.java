@@ -85,21 +85,21 @@ public class DBManager {
         }
     }
 
-    public void saveUsers(List<User> users){
-        String insertSQL = "UPDATE players SET playerName = ?, access = ?, banned = ?, reason = ?";
+    public void saveUsers(List<User> users) {
+        String updateSQL = "UPDATE players SET access = ?, banned = ?, reason = ? WHERE playerName = ?";
 
-        try(PreparedStatement stmt = connection.prepareStatement(insertSQL)) {
-            for (User user : users){
-                stmt.setString(1, user.getName());
-                stmt.setInt(2, convertBoolToBit(user.isAccess()));
-                stmt.setInt(3, convertBoolToBit(user.isBaned()));
-                stmt.setString(4, user.getReason());
+        try (PreparedStatement stmt = connection.prepareStatement(updateSQL)) {
+            for (User  user : users) {
+                stmt.setInt(1, convertBoolToBit(user.isAccess()));
+                stmt.setInt(2, convertBoolToBit(user.isBaned()));
+                stmt.setString(3, user.getReason());
+                stmt.setString(4, user.getName());
 
                 stmt.addBatch();
             }
 
             stmt.executeBatch();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

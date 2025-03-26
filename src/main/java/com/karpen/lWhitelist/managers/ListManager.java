@@ -1,6 +1,8 @@
 package com.karpen.lWhitelist.managers;
 
 import com.karpen.lWhitelist.models.User;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,25 +31,33 @@ public class ListManager {
     }
 
     public void banUserByName(String name, String reason){
-        manager.loadUsers();
+        users = manager.loadUsers();
 
         user = getUser(name);
 
         users.remove(user);
+
+        manager.saveUsers(users);
+
         user.setBaned(true);
         user.setReason(reason);
         user.setAccess(false);
+
         users.add(user);
 
         manager.saveUsers(users);
     }
 
     public void unbanUserByName(String name){
-        manager.loadUsers();
+        users = manager.loadUsers();
 
         user = getUser(name);
 
         users.remove(user);
+
+        manager.saveUsers(users);
+        users = manager.loadUsers();
+
         user.setReason(null);
         user.setBaned(false);
         user.setAccess(true);

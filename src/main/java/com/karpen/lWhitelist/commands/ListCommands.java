@@ -7,6 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -63,8 +64,15 @@ public class ListCommands implements CommandExecutor {
 
         sender.sendMessage(ChatColor.GREEN + "Игрок " + name + " забанен");
 
-        if (Objects.requireNonNull(Bukkit.getPlayer(name)).isOnline()){
-            Objects.requireNonNull(Bukkit.getPlayer(name)).kickPlayer(ChatColor.RED + "Вы забанены, " + manager.getUser(name).getReason());
+        Player player = Bukkit.getPlayer(name);
+        if (player != null && player.isOnline()) {
+            player.kickPlayer(ChatColor.RED + "Вы забанены, " + reason);
+        }
+
+        if (manager.getUser(name) == null){
+            sender.sendMessage(ChatColor.RED + "Игрок не найден в бд");
+
+            return true;
         }
 
         web.banUser(name, reason);
