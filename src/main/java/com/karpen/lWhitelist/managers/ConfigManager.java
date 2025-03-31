@@ -4,6 +4,8 @@ import com.karpen.lWhitelist.models.Config;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Objects;
+
 public class ConfigManager {
 
     private Config config;
@@ -22,5 +24,9 @@ public class ConfigManager {
         config.setDbUrl(configuration.getString("db-url"));
         config.setDbUser(configuration.getString("db-user"));
         config.setDbPassword(configuration.getString("db-password"));
+
+        config.setBanUrl(configuration.getString("api.ban.url"));
+        config.setUnbanUrl(configuration.getString("api.unban.url"));
+        config.setApiKey(configuration.getString("api.key"));
     }
 }

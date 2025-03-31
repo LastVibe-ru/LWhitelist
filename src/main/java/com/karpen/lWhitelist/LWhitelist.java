@@ -31,7 +31,7 @@ public final class LWhitelist extends JavaPlugin {
 
         dbManager = new DBManager(config, this);
         listManager = new ListManager(dbManager);
-        webManager = new WebManager(this);
+        webManager = new WebManager(this, config);
         commands = new ListCommands(listManager, webManager);
         listeners = new MainListeners(listManager);
         suggests = new ListSuggests();

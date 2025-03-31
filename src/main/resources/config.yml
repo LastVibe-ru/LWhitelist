@@ -1,5 +1,18 @@
 # LWhitelist - https://github.com/karpen-dev/
 
+# Api settings
+api:
+
+  # Url ban
+  ban:
+    url: "https://example.com/api/v1/ban?name=" # + username + api + reason
+
+  # Url unban
+  unban:
+    url: "https://example.com/api/v1/unban?name=" # + username + api
+
+  key: "API_KEY"
+
 # Database url
 db-url: "jdbc:mysql://localhost:3306/list"
 

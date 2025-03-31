@@ -85,6 +85,8 @@ public class ListCommands implements CommandExecutor {
 
         sender.sendMessage(ChatColor.GREEN + "Игрок " + name + " разбранен");
 
+        web.unbanUser(name);
+
         return true;
     }
 
