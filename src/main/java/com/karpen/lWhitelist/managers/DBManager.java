@@ -24,6 +24,13 @@ public class DBManager {
         configuration.setProperty("hibernate.connection.driver_class", "com.mysql.cj.jdbc.Driver");
         configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         configuration.setProperty("hibernate.hbm2ddl.auto", "update");
+
+        if (!config.isDebug()){
+            configuration.setProperty("hibernate.show_sql", "false");
+            configuration.setProperty("hibernate.format_sql", "false");
+            configuration.setProperty("hibernate.use_sql_comments", "false");
+        }
+
         configuration.addAnnotatedClass(User.class);
 
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
