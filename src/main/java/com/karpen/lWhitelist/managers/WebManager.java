@@ -32,7 +32,9 @@ public class WebManager {
 
             reqUrl = url + name + "&key=" + api_key;
 
-            plugin.getLogger().info("Req: " + reqUrl);
+            if (config.isDebug()){
+                plugin.getLogger().info("Req: " + reqUrl);
+            }
 
             HttpURLConnection connection = null;
 
@@ -46,7 +48,10 @@ public class WebManager {
                 int responseCode = connection.getResponseCode();
 
                 if (responseCode != HttpURLConnection.HTTP_OK) {
-                    plugin.getLogger().info("Error data fetch: HTTP " + responseCode);
+                    if (config.isDebug()){
+                        plugin.getLogger().info("Error data fetch: HTTP " + responseCode);
+                    }
+
                     BufferedReader in = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
                     String inputLine;
                     StringBuilder content = new StringBuilder();
@@ -54,7 +59,10 @@ public class WebManager {
                         content.append(inputLine);
                     }
                     in.close();
-                    plugin.getLogger().info("Error response: " + content.toString());
+
+                    if (config.isDebug()){
+                        plugin.getLogger().info("Error response: " + content.toString());
+                    }
                 }
             } catch (IOException e) {
                 plugin.getLogger().info("Error while making the request: " + e.getMessage());
@@ -83,7 +91,9 @@ public class WebManager {
 
             reqUrl = url + name + "&reason=" + encodedReason + "&key=" + api_key;
 
-            plugin.getLogger().info("Req: " + reqUrl);
+            if (config.isDebug()){
+                plugin.getLogger().info("Req: " + reqUrl);
+            }
 
             HttpURLConnection connection = null;
 
@@ -97,7 +107,10 @@ public class WebManager {
                 int responseCode = connection.getResponseCode();
 
                 if (responseCode != HttpURLConnection.HTTP_OK) {
-                    plugin.getLogger().info("Error data fetch: HTTP " + responseCode);
+                    if (config.isDebug()){
+                        plugin.getLogger().info("Error data fetch: HTTP " + responseCode);
+                    }
+
                     BufferedReader in = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
                     String inputLine;
                     StringBuilder content = new StringBuilder();
@@ -105,7 +118,10 @@ public class WebManager {
                         content.append(inputLine);
                     }
                     in.close();
-                    plugin.getLogger().info("Error response: " + content.toString());
+
+                    if (config.isDebug()){
+                        plugin.getLogger().info("Error response: " + content.toString());
+                    }
                 }
             } catch (IOException e) {
                 plugin.getLogger().info("Error while making the request: " + e.getMessage());

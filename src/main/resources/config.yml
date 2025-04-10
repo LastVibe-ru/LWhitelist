@@ -1,5 +1,8 @@
 # LWhitelist - https://github.com/karpen-dev/
 
+# Debug
+debug: true
+
 # Api settings
 api:
 

@@ -1,8 +1,6 @@
 package com.karpen.lWhitelist.managers;
 
 import com.karpen.lWhitelist.models.User;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;

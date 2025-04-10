@@ -13,4 +13,6 @@ public class Config {
     private String banUrl;
     private String unbanUrl;
     private String apiKey;
+
+    private boolean debug;
 }

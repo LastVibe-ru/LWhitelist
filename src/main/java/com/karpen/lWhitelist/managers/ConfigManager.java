@@ -28,5 +28,7 @@ public class ConfigManager {
         config.setBanUrl(configuration.getString("api.ban.url"));
         config.setUnbanUrl(configuration.getString("api.unban.url"));
         config.setApiKey(configuration.getString("api.key"));
+
+        config.setDebug(configuration.getBoolean("debug"));
     }
 }

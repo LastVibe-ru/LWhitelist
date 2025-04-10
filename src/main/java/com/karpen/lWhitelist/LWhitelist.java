@@ -2,6 +2,7 @@ package com.karpen.lWhitelist;
 
 import com.karpen.lWhitelist.commands.ListCommands;
 import com.karpen.lWhitelist.commands.ListSuggests;
+import com.karpen.lWhitelist.commands.ReloadCommand;
 import com.karpen.lWhitelist.listeners.MainListeners;
 import com.karpen.lWhitelist.managers.WebManager;
 import com.karpen.lWhitelist.models.Config;
@@ -18,6 +19,7 @@ public final class LWhitelist extends JavaPlugin {
     private DBManager dbManager;
     private ListManager listManager;
     private ListCommands commands;
+    private ReloadCommand reloadCommand;
     private MainListeners listeners;
     private ListSuggests suggests;
     private WebManager webManager;
@@ -29,15 +31,18 @@ public final class LWhitelist extends JavaPlugin {
 
         configManager.loadConfig();
 
-        dbManager = new DBManager(config, this);
+        dbManager = new DBManager(config);
         listManager = new ListManager(dbManager);
         webManager = new WebManager(this, config);
         commands = new ListCommands(listManager, webManager);
+        reloadCommand = new ReloadCommand(configManager);
         listeners = new MainListeners(listManager);
         suggests = new ListSuggests();
 
         getCommand("vlist").setExecutor(commands);
         getCommand("vlist").setTabCompleter(suggests);
+
+        getCommand("vlist-reload").setExecutor(reloadCommand);
 
         Bukkit.getPluginManager().registerEvents(listeners, this);
 
