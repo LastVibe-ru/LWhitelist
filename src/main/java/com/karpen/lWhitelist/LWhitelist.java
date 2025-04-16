@@ -4,11 +4,8 @@ import com.karpen.lWhitelist.commands.ListCommands;
 import com.karpen.lWhitelist.commands.ListSuggests;
 import com.karpen.lWhitelist.commands.ReloadCommand;
 import com.karpen.lWhitelist.listeners.MainListeners;
-import com.karpen.lWhitelist.managers.WebManager;
+import com.karpen.lWhitelist.managers.*;
 import com.karpen.lWhitelist.models.Config;
-import com.karpen.lWhitelist.managers.ConfigManager;
-import com.karpen.lWhitelist.managers.DBManager;
-import com.karpen.lWhitelist.managers.ListManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -22,7 +19,8 @@ public final class LWhitelist extends JavaPlugin {
     private ReloadCommand reloadCommand;
     private MainListeners listeners;
     private ListSuggests suggests;
-    private WebManager webManager;
+    private RequestManager requestManager;
+    private WebServerManager webServerManager;
 
     @Override
     public void onEnable() {
@@ -33,11 +31,12 @@ public final class LWhitelist extends JavaPlugin {
 
         dbManager = new DBManager(config);
         listManager = new ListManager(dbManager);
-        webManager = new WebManager(this, config);
-        commands = new ListCommands(listManager, webManager);
+        requestManager = new RequestManager(this, config);
+        commands = new ListCommands(listManager, requestManager);
         reloadCommand = new ReloadCommand(configManager);
         listeners = new MainListeners(listManager);
         suggests = new ListSuggests();
+        webServerManager = new WebServerManager(this, config, listManager);
 
         getCommand("vlist").setExecutor(commands);
         getCommand("vlist").setTabCompleter(suggests);
@@ -48,11 +47,15 @@ public final class LWhitelist extends JavaPlugin {
 
         dbManager.loadUsers();
 
+        webServerManager.startServer();
+
         getLogger().info("Loaded");
     }
 
     @Override
     public void onDisable() {
+        webServerManager.stopServer();
+
         dbManager.close();
 
         getLogger().info("Stopped");

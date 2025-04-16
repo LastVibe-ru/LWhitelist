@@ -11,12 +11,12 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-public class WebManager {
+public class RequestManager {
 
     private JavaPlugin plugin;
     private Config config;
 
-    public WebManager(JavaPlugin plugin, Config config) {
+    public RequestManager(JavaPlugin plugin, Config config) {
         this.plugin = plugin;
         this.config = config;
     }

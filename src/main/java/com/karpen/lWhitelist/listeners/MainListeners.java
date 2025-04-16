@@ -1,7 +1,6 @@
 package com.karpen.lWhitelist.listeners;
 
 import com.karpen.lWhitelist.managers.ListManager;
-import com.karpen.lWhitelist.managers.WebManager;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

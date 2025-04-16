@@ -6,7 +6,7 @@
 
     <groupId>com.karpen</groupId>
     <artifactId>LWhitelist</artifactId>
-    <version>1.3</version>
+    <version>1.4</version>
     <packaging>jar</packaging>
 
     <name>LWhitelist</name>
@@ -90,6 +90,12 @@
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>6.6.13.Final</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.sun.net.httpserver/http -->
+        <dependency>
+            <groupId>com.sun.net.httpserver</groupId>
+            <artifactId>http</artifactId>
+            <version>20070405</version>
         </dependency>
     </dependencies>
 </project>

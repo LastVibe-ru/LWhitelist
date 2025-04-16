@@ -3,6 +3,10 @@
 # Debug
 debug: true
 
+# Web server
+# Listening requests in 9010 port
+# Example request http://localhost:9010/api/allow?name=PLAYER_NAME&key=API_KEY
+
 # Api settings
 api:
 

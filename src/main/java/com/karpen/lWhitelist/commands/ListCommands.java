@@ -1,7 +1,7 @@
 package com.karpen.lWhitelist.commands;
 
 import com.karpen.lWhitelist.managers.ListManager;
-import com.karpen.lWhitelist.managers.WebManager;
+import com.karpen.lWhitelist.managers.RequestManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -10,14 +10,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 public class ListCommands implements CommandExecutor {
 
     private ListManager manager;
-    private WebManager web;
+    private RequestManager web;
 
-    public ListCommands(ListManager manager, WebManager web){
+    public ListCommands(ListManager manager, RequestManager web){
         this.manager = manager;
         this.web = web;
     }
