@@ -30,5 +30,6 @@ public class ConfigManager {
         config.setApiKey(configuration.getString("api.key"));
 
         config.setDebug(configuration.getBoolean("debug"));
+        config.setUsingWebserver(configuration.getBoolean("webserver"));
     }
 }

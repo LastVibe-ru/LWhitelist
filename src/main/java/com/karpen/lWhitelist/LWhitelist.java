@@ -47,14 +47,18 @@ public final class LWhitelist extends JavaPlugin {
 
         dbManager.loadUsers();
 
-        webServerManager.startServer();
+        if (config.isUsingWebserver()){
+            webServerManager.startServer();
+        }
 
         getLogger().info("Loaded");
     }
 
     @Override
     public void onDisable() {
-        webServerManager.stopServer();
+        if (config.isUsingWebserver()) {
+            webServerManager.stopServer();
+        }
 
         dbManager.close();
 

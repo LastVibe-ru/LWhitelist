@@ -15,4 +15,5 @@ public class Config {
     private String apiKey;
 
     private boolean debug;
+    private boolean usingWebserver;
 }
